@@ -1,108 +1,111 @@
 {
-    "name": "ts-agent",
-    "version": "1.0.1",
-    "description": "Agentscript with Typescript",
-    "author": "Yuichiro Aoki",
-    "homepage": "https://github.com/yuichiroaoki/agentscript",
-    "main": "lib/index.js",
-    "module": "lib/index.esm.js",
-    "files": [
-        "lib"
+  "name": "ts-agent",
+  "version": "1.0.1",
+  "description": "Agentscript with Typescript",
+  "author": "Yuichiro Aoki",
+  "homepage": "https://github.com/yuichiroaoki/agentscript",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuichiroaoki/agentscript.git"
+  },
+  "keywords": [
+    "netlogo",
+    "abm",
+    "typescript",
+    "agentscript"
+  ],
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/yuichiroaoki/agentscript/issues"
+  },
+  "scripts comments": {
+    "name": "@redfish/agentscript",
+    "ava": "0.25.0",
+    "build-bin": "rollup -f umd -n gis src/gis.js > bin/gis.umd.js",
+    "postinstall": "rollup -c rollup.three.js",
+    "Node settig for esm, causes error, sigh: ": "type: module",
+    "three": "^0.89.0",
+    "build-dist0": "rollup -c config/rollup.dist.js && cp -R src models views2 views3  dist",
+    "build-dist": "rollup -c config/rollup.dist.js &&  cp -R src dist",
+    "build-vendor": "yarn && shx rm -f vendor/* && rollup -c config/rollup.vendor.js",
+    "watch-docs": "documentation serve --config config/documentation.yml --github --watch src/**",
+    "mkdirs": "dist",
+    "clean-docs": "shx rm -r docs/"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
     ],
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/yuichiroaoki/agentscript.git"
-    },
-    "keywords": [
-        "netlogo",
-        "abm",
-        "typescript",
-        "agentscript"
-    ],
-    "license": "GPL-3.0",
-    "bugs": {
-        "url": "https://github.com/yuichiroaoki/agentscript/issues"
-    },
-    "scripts comments": {
-        "name": "@redfish/agentscript",
-        "ava": "0.25.0",
-        "build-bin": "rollup -f umd -n gis src/gis.js > bin/gis.umd.js",
-        "postinstall": "rollup -c rollup.three.js",
-        "Node settig for esm, causes error, sigh: ": "type: module",
-        "three": "^0.89.0",
-        "build-dist0": "rollup -c config/rollup.dist.js && cp -R src models views2 views3  dist",
-        "build-dist": "rollup -c config/rollup.dist.js &&  cp -R src dist",
-        "build-vendor": "yarn && shx rm -f vendor/* && rollup -c config/rollup.vendor.js",
-        "watch-docs": "documentation serve --config config/documentation.yml --github --watch src/**",
-        "mkdirs": "dist",
-        "clean-docs": "shx rm -r docs/"
-    },
-    "babel": {
-        "presets": [
-            "@babel/preset-env"
-        ],
-        "plugins": [
-            "@babel/plugin-proposal-class-properties"
-        ]
-    },
-    "scripts": {
-        "clean": "shx rm -rf dist vendor && shx mkdir dist vendor",
-        "start": "live-server --ignore=node_modules,.git &",
-        "build": "rollup -c",
-        "build-dist": "rollup -c config/rollup.dist.js",
-        "build-vendor": "rollup -c config/rollup.vendor.js && cp tests/steganography.esm.js vendor/steganography.js",
-        "build-scripts": "node bin/models2scripts",
-        "build-md": "bin/src2md 'models views2 views3 views3d mvc gis' > /dev/null",
-        "build-docs": "documentation build src/** --config config/documentation.yml --github --sort-order 'alpha' -f html -o docs",
-        "test": "ava test/models.js && npm run test3d",
-        "test3d": "deno test test/geom.js",
-        "watch-src": "chokidar 'src/*.js' -c 'npm run build-dist' &",
-        "watch-models": "chokidar 'models/[A-Z]*Model.js' -c 'npm run build-scripts' &",
-        "watch-docs": "chokidar 'src/*.js' -c 'npm run build-docs' &",
-        "watch": "npm-run-all watch-src watch-models",
-        "run1": "bin/runmodels models",
-        "run1s": "bin/runmodels models/scripts",
-        "run2": "bin/runmodels views2",
-        "run2c": "bin/modelsinbrowser views2",
-        "run3": "bin/runmodels views3",
-        "run3c": "bin/modelsinbrowser views3",
-        "run3d": "bin/runmodels views3d",
-        "run3dc": "bin/modelsinbrowser views3d",
-        "rund": "bin/runmodels docs",
-        "rung": "bin/runmodels gis",
-        "run3w": "bin/runmodels workers3",
-        "runnode": "bin/runnodemodels",
-        "chrome": "bin/modelsinbrowser models",
-        "safari": "bin/modelsinbrowser models Safari"
-    },
-    "Note": "shx includes shelljs; tap-xunit for circleci/ava.",
-    "dependencies": {
-        "three": "^0.120.0"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.16.0",
-        "@babel/plugin-proposal-class-properties": "^7.16.0",
-        "@babel/preset-env": "^7.16.0",
-        "@rollup/plugin-babel": "^5.3.0",
-        "@rollup/plugin-commonjs": "^21.0.1",
-        "@rollup/plugin-node-resolve": "^13.0.6",
-        "@rollup/plugin-url": "^6.0.0",
-        "@turf/turf": "^6.5.0",
-        "ava": "^2.1.0",
-        "chokidar-cli": "^1.2.1",
-        "documentation": "^13.2.5",
-        "esbuild": "^0.12.15",
-        "esinstall": "^1.1.7",
-        "esm": "^3.2.25",
-        "live-server": "latest",
-        "npm-run-all": "4.1.2",
-        "puppeteer": "*",
-        "rollup": "^2.33.1",
-        "rollup-plugin-cleanup": "*",
-        "rollup-plugin-copy": "*",
-        "rollup-plugin-peer-deps-external": "^2.2.4",
-        "rollup-plugin-terser": "*",
-        "rollup-plugin-url-resolve": "*",
-        "shx": "0.3"
-    }
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  },
+  "scripts": {
+    "clean": "shx rm -rf dist vendor && shx mkdir dist vendor",
+    "start": "live-server --ignore=node_modules,.git &",
+    "build": "rollup -c",
+    "build-dist": "rollup -c config/rollup.dist.js",
+    "build-vendor": "rollup -c config/rollup.vendor.js && cp tests/steganography.esm.js vendor/steganography.js",
+    "build-scripts": "node bin/models2scripts",
+    "build-md": "bin/src2md 'models views2 views3 views3d mvc gis' > /dev/null",
+    "build-docs": "documentation build src/** --config config/documentation.yml --github --sort-order 'alpha' -f html -o docs",
+    "test": "ava test/models.js && npm run test3d",
+    "test3d": "deno test test/geom.js",
+    "watch-src": "chokidar 'src/*.js' -c 'npm run build-dist' &",
+    "watch-models": "chokidar 'models/[A-Z]*Model.js' -c 'npm run build-scripts' &",
+    "watch-docs": "chokidar 'src/*.js' -c 'npm run build-docs' &",
+    "watch": "npm-run-all watch-src watch-models",
+    "run1": "bin/runmodels models",
+    "run1s": "bin/runmodels models/scripts",
+    "run2": "bin/runmodels views2",
+    "run2c": "bin/modelsinbrowser views2",
+    "run3": "bin/runmodels views3",
+    "run3c": "bin/modelsinbrowser views3",
+    "run3d": "bin/runmodels views3d",
+    "run3dc": "bin/modelsinbrowser views3d",
+    "rund": "bin/runmodels docs",
+    "rung": "bin/runmodels gis",
+    "run3w": "bin/runmodels workers3",
+    "runnode": "bin/runnodemodels",
+    "chrome": "bin/modelsinbrowser models",
+    "safari": "bin/modelsinbrowser models Safari",
+    "prepare": "husky install"
+  },
+  "Note": "shx includes shelljs; tap-xunit for circleci/ava.",
+  "dependencies": {
+    "three": "^0.120.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@rollup/plugin-url": "^6.0.0",
+    "@turf/turf": "^6.5.0",
+    "ava": "^2.1.0",
+    "chokidar-cli": "^1.2.1",
+    "documentation": "^13.2.5",
+    "esbuild": "^0.12.15",
+    "esinstall": "^1.1.7",
+    "esm": "^3.2.25",
+    "husky": "^7.0.0",
+    "live-server": "latest",
+    "npm-run-all": "4.1.2",
+    "prettier": "2.4.1",
+    "puppeteer": "*",
+    "rollup": "^2.33.1",
+    "rollup-plugin-cleanup": "*",
+    "rollup-plugin-copy": "*",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-terser": "*",
+    "rollup-plugin-url-resolve": "*",
+    "shx": "0.3"
+  }
 }

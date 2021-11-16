@@ -37,6 +37,9 @@
     "mkdirs": "dist",
     "clean-docs": "shx rm -r docs/"
   },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "babel": {
     "presets": [
       "@babel/preset-env"
@@ -96,6 +99,7 @@
     "esinstall": "^1.1.7",
     "esm": "^3.2.25",
     "husky": "^7.0.0",
+    "lint-staged": "^12.0.2",
     "live-server": "latest",
     "npm-run-all": "4.1.2",
     "prettier": "2.4.1",

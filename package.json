@@ -52,6 +52,7 @@
     "clean": "shx rm -rf dist vendor && shx mkdir dist vendor",
     "start": "live-server --ignore=node_modules,.git &",
     "build": "rollup -c",
+    "prepublishOnly": "yarn build",
     "build-dist": "rollup -c config/rollup.dist.js",
     "build-vendor": "rollup -c config/rollup.vendor.js && cp tests/steganography.esm.js vendor/steganography.js",
     "build-scripts": "node bin/models2scripts",

@@ -1,4 +1,4 @@
-# AgentScript
+# ts-agent
 
 AgentScript is a minimalist Agent Based modeling system based on [NetLogo](https://ccl.northwestern.edu/netlogo/) semantics.
 

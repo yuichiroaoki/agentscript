@@ -1,6 +1,6 @@
 {
     "name": "ts-agent",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Agentscript with Typescript",
     "author": "Yuichiro Aoki",
     "homepage": "https://github.com/yuichiroaoki/agentscript",

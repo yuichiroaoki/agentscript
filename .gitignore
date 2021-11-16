@@ -26,3 +26,5 @@ LeafletElementOverlay
 # package-lock.json
 # yarn.lock
 # web_modules/
+
+lib

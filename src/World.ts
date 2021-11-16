@@ -282,6 +282,10 @@ export default class World {
  */
 class BBoxTransform {
   bbox: any[];
+  mx: number;
+  my: number;
+  bx: number;
+  by: number;
   /**
    * Creates an instance of BBoxTransform.
    * See https://tools.ietf.org/html/rfc7946#section-5
@@ -309,13 +313,11 @@ class BBoxTransform {
     if (maxY < minY) [maxY, minY] = [minY, maxY];
     const { maxXcor, maxYcor, minXcor, minYcor } = world;
 
-    const mx = (minX - maxX) / (maxXcor - minXcor);
-    const my = (maxY - minY) / (maxYcor - minYcor);
+    this.mx = (minX - maxX) / (maxXcor - minXcor);
+    this.my = (maxY - minY) / (maxYcor - minYcor);
 
-    const bx = (minX + maxX - mx * (maxXcor + minXcor)) / 2;
-    const by = (maxY + minY - my * (maxYcor + minYcor)) / 2;
-
-    Object.assign(this, { mx, my, bx, by });
+    this.bx = (minX + maxX - this.mx * (maxXcor + minXcor)) / 2;
+    this.by = (maxY + minY - this.my * (maxYcor + minYcor)) / 2;
   }
 
   /**

@@ -9,5 +9,12 @@ import Color from "./Color";
 import Patch from "./Patch";
 import Turtles from "./Turtles";
 import Model from "./Model";
+import TwoDraw from "./TwoDraw";
 
-export { AgentArray, AgentSet, AgentList, Animator, World, PatchesView, Color, Patch, Turtles, TurtlesView, Model };
+export { 
+	AgentArray, 
+	AgentSet, 
+	AgentList, 
+	Animator, World, PatchesView, Color, Patch, Turtles, TurtlesView, Model,
+	TwoDraw
+ };

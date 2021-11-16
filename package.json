@@ -1,8 +1,8 @@
 {
     "name": "ts-agent",
-    "version": "0.10.16",
+    "version": "1.0.0",
     "description": "Agentscript with Typescript",
-    "author": "Owen Densmore",
+    "author": "Yuichiro Aoki",
     "homepage": "https://github.com/yuichiroaoki/agentscript",
     "main": "lib/index.js",
     "module": "lib/index.esm.js",

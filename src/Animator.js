@@ -26,14 +26,14 @@ export default class Animator {
         return this.timeoutID != null
     }
 
-    startStats() {
-        if (this.stats) return console.log('startStats: already running')
-        import('https://cdn.skypack.dev/stats.js').then(m => {
-            this.stats = new m.default()
-            document.body.appendChild(this.stats.dom)
-        })
-        return this // chaining off ctor
-    }
+    // startStats() {
+    //     if (this.stats) return console.log('startStats: already running')
+    //     import('https://cdn.skypack.dev/stats.js').then(m => {
+    //         this.stats = new m.default()
+    //         document.body.appendChild(this.stats.dom)
+    //     })
+    //     return this // chaining off ctor
+    // }
 
     // Stop and restart with the new steps & fps
     reset(steps = -1, fps = this.fps) {

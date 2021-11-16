@@ -1,6 +1,6 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.120.0/build/three.module.js'
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.120.0/examples/jsm/controls/OrbitControls.js'
-import Stats from 'https://cdn.skypack.dev/stats.js'
+// import Stats from 'https://cdn.skypack.dev/stats.js'
 
 import * as util from '../src/utils.js'
 const degToRad = util.degToRad
@@ -56,8 +56,8 @@ export function addHelpers(renderer, scene, camera, width, zUp = true) {
 
     const orbitControl = new OrbitControls(camera, renderer.domElement)
 
-    const stats = new Stats()
-    document.body.appendChild(stats.dom)
+    // const stats = new Stats()
+    // document.body.appendChild(stats.dom)
 
     scene.add(axes)
     scene.add(grid)
@@ -122,10 +122,10 @@ export function renderOnce(renderer, scene, camera, fcn) {
 }
 export function animate(renderer, scene, camera, fcn) {
     function render(time) {
-        if (!stats) {
-            stats = new Stats()
-            document.body.appendChild(stats.dom)
-        }
+        // if (!stats) {
+        //     stats = new Stats()
+        //     document.body.appendChild(stats.dom)
+        // }
         // stats.begin()
 
         checkResize(renderer, camera)
@@ -134,7 +134,7 @@ export function animate(renderer, scene, camera, fcn) {
         requestAnimationFrame(render)
 
         // stats.end()
-        stats.update()
+        // stats.update()
     }
     requestAnimationFrame(render)
 }

@@ -10,11 +10,22 @@ import Patch from "./Patch";
 import Turtles from "./Turtles";
 import Model from "./Model";
 import TwoDraw from "./TwoDraw";
+import Link from "./Link";
+import Links from "./Links";
 
-export { 
-	AgentArray, 
-	AgentSet, 
-	AgentList, 
-	Animator, World, PatchesView, Color, Patch, Turtles, TurtlesView, Model,
-	TwoDraw
- };
+export {
+  AgentArray,
+  AgentSet,
+  AgentList,
+  Animator,
+  World,
+  PatchesView,
+  Color,
+  Patch,
+  Turtles,
+  TurtlesView,
+  Model,
+  TwoDraw,
+  Link,
+  Links,
+};

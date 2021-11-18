@@ -1,4 +1,4 @@
-import AgentArray from "./AgentArray.js";
+import AgentArray from "./AgentArray";
 
 /**
  * A model's {@link Patches}, {@link Turtles}, {@link Links},

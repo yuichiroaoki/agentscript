@@ -110,6 +110,7 @@
     "rollup-plugin-copy": "*",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-terser": "*",
+    "rollup-plugin-typescript2": "^0.31.0",
     "rollup-plugin-url-resolve": "*",
     "shx": "0.3",
     "typescript": "^4.4.4"

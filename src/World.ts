@@ -34,12 +34,12 @@ import * as util from "./utils.js";
  *          }
  */
 export default class World {
-  maxX = 16;
-  maxY = 16;
-  maxZ = 16;
-  minX = -16;
-  minY = -16;
-  minZ = -16;
+  maxX: number = 16;
+  maxY: number = 16;
+  maxZ: number = 16;
+  minX: number = -16;
+  minY: number = -16;
+  minZ: number = -16;
   numX!: number;
   width!: number;
   numY!: number;
@@ -104,10 +104,13 @@ export default class World {
 
     let { minX, maxX, minY, maxY, minZ, maxZ } = this;
 
-    util.forLoop({ minX, maxX, minY, maxY, minZ, maxZ }, (val, key) => {
-      if (!Number.isInteger(val))
-        throw Error(`${key}:${val} must be an integer`);
-    });
+    util.forLoop(
+      { minX, maxX, minY, maxY, minZ, maxZ },
+      (val: unknown, key: any) => {
+        if (!Number.isInteger(val))
+          throw Error(`${key}:${val} must be an integer`);
+      }
+    );
 
     this.numX = this.width = maxX - minX + 1;
     this.numY = this.height = maxY - minY + 1;
@@ -144,7 +147,7 @@ export default class World {
    *
    * @returns {Array} A random x,y float array
    */
-  randomPoint() {
+  randomPoint(): [x: number, y: number] {
     return [
       util.randomFloat2(this.minXcor, this.maxXcor),
       util.randomFloat2(this.minYcor, this.maxYcor),
@@ -156,7 +159,7 @@ export default class World {
    *
    * @returns {Array} A random x,y,z float array
    */
-  random3DPoint() {
+  random3DPoint(): [x: number, y: number, z: number] {
     return [
       util.randomFloat2(this.minXcor, this.maxXcor),
       util.randomFloat2(this.minYcor, this.maxYcor),
@@ -169,7 +172,7 @@ export default class World {
    *
    * @returns {Array}  A random x,y integer array
    */
-  randomPatchPoint() {
+  randomPatchPoint(): [x: number, y: number] {
     return [
       util.randomInt2(this.minX, this.maxX),
       util.randomInt2(this.minY, this.maxY),
@@ -184,7 +187,7 @@ export default class World {
    * @param {number} [z=this.centerZ] z value
    * @returns {boolean} Whether or not on-world
    */
-  isOnWorld(x, y, z = this.centerZ) {
+  isOnWorld(x: number, y: number, z: number = this.centerZ) {
     return (
       this.minXcor <= x &&
       x <= this.maxXcor &&
@@ -214,7 +217,7 @@ export default class World {
    * @param {number} maxY max bounding box y value
    * @returns {BBoxTransform} Instance of the BBoxTransform
    */
-  bboxTransform(minX, minY, maxX, maxY) {
+  bboxTransform(minX: number, minY: number, maxX: number, maxY: number) {
     return new BBoxTransform(minX, minY, maxX, maxY, this);
   }
 
@@ -227,7 +230,16 @@ export default class World {
 
   // Convert a canvas context to world euclidean coordinates
   // Change the ctx.canvas size, determined by patchSize.
-  setEuclideanTransform(ctx, patchSize) {
+  setEuclideanTransform(
+    ctx: {
+      canvas: any;
+      restore: () => void;
+      save: () => void;
+      scale: (arg0: any, arg1: number) => void;
+      translate: (arg0: number, arg1: number) => void;
+    },
+    patchSize: number
+  ) {
     // ctx.canvas.width = this.numX * patchSize
     // ctx.canvas.height = this.numY * patchSize
     this.setCanvasSize(ctx.canvas, patchSize);
@@ -238,7 +250,7 @@ export default class World {
   }
   // Return patch size for given canvas.
   // Error if canvas patch width/height differ.
-  patchSize(canvas) {
+  patchSize(canvas: { clientWidth: any; clientHeight: any }) {
     const { numX, numY } = this;
     const { clientWidth: width, clientHeight: height } = canvas;
     const xSize = width / numX;
@@ -250,21 +262,21 @@ export default class World {
   }
   // Change canvas size to this world's size.
   // Does not change size if already the same, preserving the ctx content.
-  setCanvasSize(canvas, patchSize) {
+  setCanvasSize(canvas: any, patchSize: number) {
     const [width, height] = this.getWorldSize(patchSize);
     util.setCanvasSize(canvas, width, height);
   }
 
   // Convert pixel location (top/left offset i.e. mouse) to patch coords (float)
-  pixelXYtoPatchXY(x, y, patchSize) {
+  pixelXYtoPatchXY(x: number, y: number, patchSize: number) {
     return [this.minXcor + x / patchSize, this.maxYcor - y / patchSize];
   }
   // Convert patch coords (float) to pixel location (top/left offset i.e. mouse)
-  patchXYtoPixelXY(x, y, patchSize) {
+  patchXYtoPixelXY(x: number, y: number, patchSize: number) {
     return [(x - this.minXcor) * patchSize, (this.maxYcor - y) * patchSize];
   }
 
-  xyToPatchIndex(x, y) {
+  xyToPatchIndex(x: number, y: number) {
     if (!this.isOnWorld(x, y)) return undefined;
     const { minX, maxX, maxY, numX, maxXcor, maxYcor } = this;
     x = x === maxXcor ? maxX : Math.round(x);
@@ -340,7 +352,7 @@ class BBoxTransform {
    * @param {Array} worldPoint A point in the world coordinates
    * @returns {Array} A point in the bbox coordinates
    */
-  toBBox(worldPoint) {
+  toBBox(worldPoint: [any, any]) {
     const { mx, my, bx, by } = this;
     const [worldX, worldY] = worldPoint;
     const x = mx * worldX + bx;

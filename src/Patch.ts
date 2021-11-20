@@ -1,5 +1,11 @@
 import * as util from "./utils.js";
-import AgentList from "./AgentList.js";
+import AgentList from "./AgentList";
+import AgentSet from "./AgentSet";
+import Model from "./Model";
+import Turtles from "./Turtles";
+import Turtle from "./Turtle2D";
+import Patches from "./Patches";
+import AgentArray from "./AgentArray";
 
 // Class Patch instances represent a rectangle on a grid.  They hold variables
 // that are in the patches the turtles live on.  The set of all patches
@@ -27,12 +33,14 @@ import AgentList from "./AgentList.js";
  */
 export default class Patch {
   // Set by AgentSet
-  agentSet;
-  model;
-  name;
+  agentSet: AgentSet;
+  model: Model;
+  name: string;
 
-  turtles;
+  turtles: AgentSet;
   z = 0;
+  id: any;
+  patches: Patches;
 
   // static defaultVariables() {
   //     // Core variables for patches.
@@ -46,10 +54,10 @@ export default class Patch {
   //     Object.assign(this, Patch.defaultVariables())
   // }
   // Getter for x,y derived from patch id, thus no setter.
-  get x() {
+  get x(): number {
     return (this.id % this.model.world.width) + this.model.world.minX;
   }
-  get y() {
+  get y(): number {
     return this.model.world.maxY - Math.floor(this.id / this.model.world.width);
   }
   // get z() {
@@ -62,7 +70,7 @@ export default class Patch {
    *
    * @return {boolean}
    */
-  isOnEdge() {
+  isOnEdge(): boolean {
     return this.patches.isOnEdge(this);
   }
 
@@ -77,7 +85,7 @@ export default class Patch {
    *
    * @return {AgentArray}
    */
-  get neighbors() {
+  get neighbors(): AgentArray {
     // lazy promote neighbors from getter to instance prop.
     const n = this.patches.neighbors(this);
     Object.defineProperty(this, "neighbors", { value: n, enumerable: true });
@@ -90,7 +98,7 @@ export default class Patch {
    *
    * @return {AgentArray}
    */
-  get neighbors4() {
+  get neighbors4(): AgentArray {
     const n = this.patches.neighbors4(this);
     Object.defineProperty(this, "neighbors4", {
       value: n,
@@ -105,12 +113,12 @@ export default class Patch {
    *
    * @return {AgentArray}
    */
-  get turtlesHere() {
+  get turtlesHere(): Turtles | null {
     if (this.turtles == null) {
-      this.patches.ask((p) => {
+      this.patches.ask((p: Patch) => {
         p.turtles = new AgentList(this.model);
       });
-      this.model.turtles.ask((t) => {
+      this.model.turtles.ask((t: Turtle) => {
         t.patch.turtles.push(t);
       });
     }
@@ -123,7 +131,7 @@ export default class Patch {
    * @param {String} breed
    * @return {AgentArray}
    */
-  breedsHere(breed) {
+  breedsHere(breed: string): AgentSet {
     const turtles = this.turtlesHere;
     return turtles.withBreed(breed);
   }
@@ -132,7 +140,7 @@ export default class Patch {
   // Distance from me to x, y.
   // 2.5D: use z too if both z & this.z exist.
   // REMIND: No off-world test done
-  distanceXY(x, y, z = null) {
+  distanceXY(x: number, y: number, z: number | null = null) {
     const useZ = z != null && this.z != null;
     return useZ
       ? util.distance3(this.x, this.y, this.z, x, y, z)
@@ -165,7 +173,7 @@ export default class Patch {
   }
   // Return patch w/ given parameters. Return undefined if off-world.
   // Return patch dx, dy from my position.
-  patchAt(dx, dy) {
+  patchAt(dx: number, dy: number) {
     return this.patches.patch(this.x + dx, this.y + dy);
   }
   patchAtHeadingAndDistance(heading, distance) {
@@ -179,5 +187,3 @@ export default class Patch {
     });
   }
 }
-
-// export default Patch

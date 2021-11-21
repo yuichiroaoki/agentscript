@@ -1,4 +1,5 @@
 import AgentArray from "./AgentArray";
+import Model from "./Model";
 
 /**
  * A model's {@link Patches}, {@link Turtles}, {@link Links},
@@ -25,10 +26,14 @@ import AgentArray from "./AgentArray";
 
 export default class AgentSet extends AgentArray {
   // Inherited by Patches, Turtles, Links
-  model;
-  name;
+  model: Model;
+  name: string;
   baseSet;
   AgentClass;
+  breeds: {};
+  ID: number;
+  ownVariables: any[];
+  agentProto: any;
 
   /**
    * Magic to return AgentArrays rather than AgentSets
@@ -36,9 +41,9 @@ export default class AgentSet extends AgentArray {
    *
    * @readonly
    */
-  static get [Symbol.species]() {
-    return AgentArray;
-  }
+  // static get [Symbol.species]() {
+  //   return AgentArray;
+  // }
 
   constructor(model, AgentClass, name, baseSet = null) {
     super(); // create empty AgentArray
@@ -137,7 +142,7 @@ export default class AgentSet extends AgentArray {
    * @param {AgentSet} breed A breed AgentSet
    * @returns {AgentArray}
    */
-  withBreed(breed) {
+  withBreed(breed: AgentSet): AgentArray {
     return this.filter((a) => a.agentSet === breed);
   }
 
@@ -200,7 +205,7 @@ export default class AgentSet extends AgentArray {
    * @param {any} value
    * @returns {AgentSet} This AgentSet
    */
-  setDefault(name, value) {
+  setDefault(name: string, value: any): AgentSet {
     this.agentProto[name] = value;
     return this;
   }
@@ -210,7 +215,7 @@ export default class AgentSet extends AgentArray {
    * @param {String} name The name of the default
    * @returns {any} The default value
    */
-  getDefault(name) {
+  getDefault(name: string): any {
     return this.agentProto[name];
   }
   // Used when getter/setter's need to know if get/set default
@@ -266,7 +271,7 @@ export default class AgentSet extends AgentArray {
    *
    * @param {Function} fcn fcn(agent, index?, array?)
    */
-  ask(fcn) {
+  ask(fcn: Function) {
     if (this.length === 0) return;
     const lastID = this.last().id; // would fail w/o 0 check above
     // for (let i = 0; this[i].id <= lastID; i++) { // nope.
@@ -280,7 +285,7 @@ export default class AgentSet extends AgentArray {
    *
    * @param {Function} fcn fcn(agent, index?, array?)
    */
-  askSet(fcn) {
+  askSet(fcn: Function) {
     // Manages immutability reasonably well.
     if (this.length === 0) return;
     // Patches are static
@@ -293,7 +298,7 @@ export default class AgentSet extends AgentArray {
   // BaseSets can only add past the end of the array.
   // This allows us to manage mutations by allowing length change,
   // and managing deletions only within the original length.
-  baseSetAsk(fcn) {
+  baseSetAsk(fcn: Function) {
     if (this.length === 0) return;
     const lastID = this.last().id;
 
@@ -321,7 +326,7 @@ export default class AgentSet extends AgentArray {
   // managing agents that have died or changed breed.
   // In other words, we can be concerned only with mutations
   // of the agents themselves.
-  cloneAsk(fcn) {
+  cloneAsk(fcn: Function) {
     const clone = this.clone();
     for (let i = 0; i < clone.length; i++) {
       const obj = clone[i];
@@ -332,5 +337,3 @@ export default class AgentSet extends AgentArray {
     }
   }
 }
-
-// export default AgentSet

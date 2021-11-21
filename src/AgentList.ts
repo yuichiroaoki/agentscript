@@ -1,7 +1,8 @@
-import * as util from "./utils.js";
-import AgentArray from "./AgentArray.js";
+import * as util from "./utils";
+import AgentArray from "./AgentArray";
 
 export default class AgentList extends AgentArray {
+  model: any;
   // /**
   //  * Magic to return AgentArrays rather than AgentList
   //  * [Symbol.species](https://goo.gl/Zsxwxd)

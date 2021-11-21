@@ -1,5 +1,10 @@
 export default class Animator {
-  constructor(fcn, steps = -1, fps = 30) {
+  timeoutID: any;
+  fps: number;
+  steps: number;
+  ticks: number;
+  stats: any;
+  constructor(fcn: Function, steps = -1, fps = 30) {
     Object.assign(this, { fcn, steps, fps, timeoutID: null, ticks: 0 });
     this.start();
   }
@@ -20,6 +25,9 @@ export default class Animator {
     this.fcn();
     if (this.stats) this.stats.update();
     return this; // chaining off ctor
+  }
+  fcn() {
+    throw new Error("Method not implemented.");
   }
 
   isRunning() {

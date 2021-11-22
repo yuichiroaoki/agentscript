@@ -1,5 +1,9 @@
-import AgentList from "./AgentList.js";
-import * as util from "./utils.js";
+import AgentList from "./AgentList";
+import AgentSet from "./AgentSet";
+import Link from "./Link";
+import Model from "./Model";
+import Patch from "./Patch";
+import * as util from "./utils";
 
 /**
  * Class Turtle instances represent the dynamic, behavioral element of modeling.
@@ -17,9 +21,15 @@ export default class Turtle {
   atEdge = "wrap";
   hidden = false;
   // Set by AgentSet
-  agentSet;
-  model;
-  name;
+  agentSet: AgentSet;
+  model: Model;
+  name: string;
+  theta: any;
+  x: number;
+  y: number;
+  z: number;
+  id: number;
+  pitch: any;
 
   // Alas doesn't work
   // /**
@@ -73,17 +83,24 @@ export default class Turtle {
    * @returns {Array} An Array of the new Turtles, generally ignored
    * due to the init function
    */
-  hatch(num = 1, breed = this.agentSet, init = (turtle) => {}) {
-    return breed.create(num, (turtle) => {
-      // turtle.setxy(this.x, this.y)
-      turtle.setxy(this.x, this.y, this.z);
-      turtle.theta = this.theta;
-      // hatched turtle inherits parents' ownVariables
-      for (const key of breed.ownVariables) {
-        if (turtle[key] == null) turtle[key] = this[key];
+  hatch(num = 1, breed = this.agentSet, init: Function = (turtle: any) => {}) {
+    return breed.create(
+      num,
+      (turtle: {
+        [x: string]: any;
+        setxy: (arg0: number, arg1: number, arg2: number) => void;
+        theta: any;
+      }) => {
+        // turtle.setxy(this.x, this.y)
+        turtle.setxy(this.x, this.y, this.z);
+        turtle.theta = this.theta;
+        // hatched turtle inherits parents' ownVariables
+        for (const key of breed.ownVariables) {
+          if (turtle[key] == null) turtle[key] = this[key];
+        }
+        init(turtle);
       }
-      init(turtle);
-    });
+    );
   }
   // Getter for links for this turtle.
   // Uses lazy evaluation to promote links to instance variables.
@@ -125,7 +142,7 @@ export default class Turtle {
    * @param {Angle} heading The heading I wish to be roated to.
    * @return {Angle}
    */
-  subtractHeading(heading) {
+  subtractHeading(heading: any) {
     // // Using rads so will work with any geometry.
     // const rads1 = this.model.toRads(this.heading)
     // const rads2 = this.model.toRads(heading)
@@ -141,7 +158,7 @@ export default class Turtle {
    * @param {number} y Turtle's Y coord, a Float in patch space
    * @param {number|undefined} [z=undefined] Turtle's Z coord if given
    */
-  setxy(x, y, z = undefined) {
+  setxy(x: number, y: number, z = undefined) {
     const p0 = this.patch;
     this.x = x;
     this.y = y;
@@ -149,7 +166,7 @@ export default class Turtle {
 
     this.checkXYZ(p0);
   }
-  checkXYZ(p0) {
+  checkXYZ(p0: any) {
     this.checkEdge();
     this.checkPatch(p0);
   }
@@ -160,7 +177,7 @@ export default class Turtle {
       this.handleEdge(x, y, z);
     }
   }
-  checkPatch(p0) {
+  checkPatch(p0: { turtles: any }) {
     const p = this.patch;
 
     if (p != p0) {
@@ -183,7 +200,7 @@ export default class Turtle {
    * @param {number} y Turtle's y coord
    * @param {number|undefined} [z=undefined] Turtle's z coord if not undefined
    */
-  handleEdge(x, y, z = undefined) {
+  handleEdge(x: number, y: number, z = undefined) {
     let atEdge = this.atEdge;
 
     if (util.isString(atEdge)) {
@@ -224,7 +241,7 @@ export default class Turtle {
    *
    * @param {Patch|Turtle} agent A Patch or Turtle who's location is used
    */
-  moveTo(agent) {
+  moveTo(agent: { x: any; y: any; z: any }) {
     // this.setxy(agent.x, agent.y)
     this.setxy(agent.x, agent.y, agent.z);
   }
@@ -233,7 +250,7 @@ export default class Turtle {
    *
    * @param {number} d The distance to move
    */
-  forward(d) {
+  forward(d: number) {
     this.setxy(
       this.x + d * Math.cos(this.theta),
       this.y + d * Math.sin(this.theta)
@@ -245,7 +262,7 @@ export default class Turtle {
    *
    * @param {number} angle The angle to rotate by
    */
-  rotate(angle) {
+  rotate(angle: number) {
     angle = this.model.toCCW(angle);
     this.heading += angle;
   }
@@ -254,7 +271,7 @@ export default class Turtle {
    *
    * @param {number} angle The angle to rotate by
    */
-  right(angle) {
+  right(angle: number) {
     this.rotate(-angle);
   }
   /**
@@ -262,7 +279,7 @@ export default class Turtle {
    *
    * @param {number} angle The angle to rotate by
    */
-  left(angle) {
+  left(angle: number) {
     this.rotate(angle);
   }
 
@@ -271,7 +288,7 @@ export default class Turtle {
    *
    * @param {Patch|Turtle} agent The agent to face towards
    */
-  face(agent) {
+  face(agent: any) {
     // this.theta = this.towards(agent)
     this.heading = this.towards(agent);
   }
@@ -281,7 +298,7 @@ export default class Turtle {
    * @param {number} x The x coordinate
    * @param {number} y The y coordinate
    */
-  facexy(x, y) {
+  facexy(x: any, y: any) {
     // this.theta = this.towardsXY(x, y)
     this.heading = this.towardsXY(x, y);
   }
@@ -292,7 +309,7 @@ export default class Turtle {
    * @param {number} distance The distance ahead
    * @return {Patch|undefined} The patch at the distance ahead of this Turtle
    */
-  patchAhead(distance) {
+  patchAhead(distance: number) {
     return this.patchAtHeadingAndDistance(this.heading, distance);
   }
   /**
@@ -302,7 +319,7 @@ export default class Turtle {
    * @param {number} distance The distance ahead
    * @return {Patch|undefined} The patch found, or undefined if off-world
    */
-  patchRightAndAhead(angle, distance) {
+  patchRightAndAhead(angle: number, distance: number): Patch | undefined {
     // if (this.model.geometry === 'heading') angle = -angle
     angle = this.model.toCCW(angle);
     return this.patchAtHeadingAndDistance(this.heading - angle, distance);
@@ -314,7 +331,7 @@ export default class Turtle {
    * @param {number} distance The distance ahead
    * @return {Patch|undefined} The patch found, or undefined if off-world
    */
-  patchLeftAndAhead(angle, distance) {
+  patchLeftAndAhead(angle: number, distance: number): Patch | undefined {
     return this.patchRightAndAhead(-angle, distance);
   }
   /**
@@ -322,7 +339,7 @@ export default class Turtle {
    * @param {number} distance The distance ahead
    * @return {Boolean} True if moving forward by distance is on-world
    */
-  canMove(distance) {
+  canMove(distance: number): boolean {
     return this.patchAhead(distance) != null;
   }
 
@@ -336,7 +353,7 @@ export default class Turtle {
    * @param {number|undefined} [z=null]
    * @return {number} distance in patch coordinates.
    */
-  distanceXY(x, y, z = null) {
+  distanceXY(x: number, y: number, z: number = null): number {
     const useZ = z != null && this.z != null;
     return useZ
       ? util.distance3(this.x, this.y, this.z, x, y, z)
@@ -349,7 +366,7 @@ export default class Turtle {
    * @param {Patch|Turtle} agent
    * @return {number} distance in patch coordinates.
    */
-  distance(agent) {
+  distance(agent: { x: number; y: number; z: number }): number {
     const { x, y, z } = agent;
     return this.distanceXY(x, y, z);
   }
@@ -375,7 +392,7 @@ export default class Turtle {
    * @param {Patch|Turtle} agent The agent who's angle from this Turtle we use
    * @return {number} The angle towards the agent
    */
-  towards(agent) {
+  towards(agent: { x: number; y: number }): number {
     return this.towardsXY(agent.x, agent.y);
   }
   /**
@@ -384,7 +401,7 @@ export default class Turtle {
    * @param {number} y The y coordinarte
    * @return {number} The angle towards x,y
    */
-  towardsXY(x, y) {
+  towardsXY(x: number, y: number): number {
     // return util.radiansTowardXY(this.x, this.y, x, y)
     let rads = util.radiansTowardXY(this.x, this.y, x, y);
     // rads = this.model.toCCW(rads)
@@ -397,7 +414,7 @@ export default class Turtle {
    * @param {number} dy The delta y ahead
    * @return {Patch|undefined} The patch dx, dy ahead; undefined if off-world
    */
-  patchAt(dx, dy) {
+  patchAt(dx: number, dy: number): Patch | undefined {
     return this.model.patches.patch(this.x + dx, this.y + dy);
   }
 
@@ -410,7 +427,10 @@ export default class Turtle {
    * @param {number} distance The distance ahead
    * @return {Patch|undefined} The Patch, or undefined if off-world
    */
-  patchAtHeadingAndDistance(heading, distance) {
+  patchAtHeadingAndDistance(
+    heading: number,
+    distance: number
+  ): Patch | undefined {
     return this.model.patches.patchAtHeadingAndDistance(
       this,
       heading,
@@ -425,7 +445,7 @@ export default class Turtle {
    * @param {Link} l
    * @return {Turtle} The other turtle making this Link
    */
-  otherEnd(l) {
+  otherEnd(l: Link): Turtle {
     return l.end0 === this ? l.end1 : l.end0;
   }
   // Return all turtles linked to me
@@ -433,15 +453,15 @@ export default class Turtle {
    * Return all turtles linked to me. Basically me.otherEnd of all my links.
    * @return {Array} All the turtles linked to me
    */
-  linkNeighbors() {
-    return this.links.map((l) => this.otherEnd(l));
+  linkNeighbors(): Array<any> {
+    return this.links.map((l: any) => this.otherEnd(l));
   }
   /**
    * Is the given Turtle linked to me?
    * @param {Turtle} t
    * @return {Boolean}
    */
-  isLinkNeighbor(t) {
+  isLinkNeighbor(t: Turtle): boolean {
     return t in this.linkNeighbors();
   }
 }

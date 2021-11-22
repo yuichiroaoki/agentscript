@@ -1,5 +1,13 @@
 import AgentArray from "./AgentArray";
+import Link from "./Link";
 import Model from "./Model";
+import Patch from "./Patch";
+import Turtle from "./Turtle2D";
+
+interface IObject {
+  id: number;
+  agentConstructor?: any;
+}
 
 /**
  * A model's {@link Patches}, {@link Turtles}, {@link Links},
@@ -29,7 +37,7 @@ export default class AgentSet extends AgentArray {
   model: Model;
   name: string;
   baseSet;
-  AgentClass;
+  AgentClass: Patch | Turtle | Link;
   breeds: {};
   ID: number;
   ownVariables: any[];
@@ -64,7 +72,7 @@ export default class AgentSet extends AgentArray {
     // Create a proto for our agents by having a defaults and instance layer
     // this.AgentClass = AgentClass
     this.agentProto = new AgentClass(this);
-    this.protoMixin(this.agentProto, AgentClass);
+    // this.protoMixin(this.agentProto, AgentClass);
     // }
   }
   /**
@@ -78,35 +86,37 @@ export default class AgentSet extends AgentArray {
    * @param {Object} agentProto A new instance of the Agent being added
    * @param {Patch|Turtle|Link} AgentClass It's Class
    */
-  protoMixin(agentProto, AgentClass) {
-    Object.assign(agentProto, {
-      agentSet: this,
-      model: this.model,
-      // world: this.world
-    });
-    agentProto[this.baseSet.name] = this.baseSet;
+  // delete for now
+  // protoMixin(agentProto: Object, AgentClass: Patch | Turtle | Link) {
+  //   Object.assign(agentProto, {
+  //     agentSet: this,
+  //     model: this.model,
+  //     // world: this.world
+  //   });
+  //   agentProto[this.baseSet.name] = this.baseSet;
 
-    // if (this.isBaseSet()) {
-    // Model.reset should not redefine these.
-    if (!AgentClass.prototype.setBreed) {
-      Object.assign(AgentClass.prototype, {
-        setBreed(breed) {
-          breed.setBreed(this);
-        },
-        getBreed() {
-          return this.agentSet;
-        },
-        isBreed(breed) {
-          return this.agentSet === breed;
-        },
-      });
-      Object.defineProperty(AgentClass.prototype, "breed", {
-        get: function () {
-          return this.agentSet;
-        },
-      });
-    }
-  }
+  //   // if (this.isBaseSet()) {
+  //   // Model.reset should not redefine these.
+
+  //   if (!AgentClass.prototype.setBreed) {
+  //     Object.assign(AgentClass.prototype, {
+  //       setBreed(breed) {
+  //         breed.setBreed(this);
+  //       },
+  //       getBreed() {
+  //         return this.agentSet;
+  //       },
+  //       isBreed(breed) {
+  //         return this.agentSet === breed;
+  //       },
+  //     });
+  //     Object.defineProperty(AgentClass.prototype, "breed", {
+  //       get: function () {
+  //         return this.agentSet;
+  //       },
+  //     });
+  //   }
+  // }
 
   /**
    * Create a subarray of this AgentSet.
@@ -117,20 +127,20 @@ export default class AgentSet extends AgentArray {
    * @param {String} name The name of the new breed AgentSet
    * @returns {AgentSet} A subarray of me
    */
-  newBreed(name) {
+  newBreed(name: string): AgentSet {
     return new AgentSet(this.model, this.AgentClass, name, this);
   }
 
   /**
    * @returns {boolean} true if I am a baseSet subarray
    */
-  isBreedSet() {
+  isBreedSet(): boolean {
     return this.baseSet !== this;
   }
   /**
    * @returns {boolean} true if I am a Patches, Turtles or Links AgentSet
    */
-  isBaseSet() {
+  isBaseSet(): boolean {
     return this.baseSet === this;
   }
 
@@ -142,14 +152,14 @@ export default class AgentSet extends AgentArray {
    * @param {AgentSet} breed A breed AgentSet
    * @returns {AgentArray}
    */
-  withBreed(breed: AgentSet): AgentArray {
+  withBreed(breed: AgentSet) {
     return this.filter((a) => a.agentSet === breed);
   }
 
   // Abstract method used by subclasses to create and add their instances.
-  create() {
-    console.log(`AgentSet: Abstract method called: ${this}`);
-  }
+  // create() {
+  //   console.log(`AgentSet: Abstract method called: ${this}`);
+  // }
 
   /**
    * @param {Object} o An Agent to be added to this AgentSet
@@ -158,7 +168,7 @@ export default class AgentSet extends AgentArray {
    * Add an Agent to this AgentSet.  Only used by factory methods.
    * Adds the `id` property to Agent. Increment AgentSet `ID`.
    */
-  addAgent(o = undefined) {
+  addAgent(o: IObject = undefined): Object {
     // o only for breeds adding themselves to their baseSet
     o = o || Object.create(this.agentProto); // REMIND: Simplify! Too slick.
     if (this.isBreedSet()) {
@@ -184,7 +194,7 @@ export default class AgentSet extends AgentArray {
    * @param {Object} o The Agent to be removed
    * @returns {AgentSet} This AgentSet with the Agent removed
    */
-  removeAgent(o) {
+  removeAgent(o: IObject): AgentSet {
     // Note removeAgent(agent) different than remove(agent) which
     // simply removes the agent from it's array
 

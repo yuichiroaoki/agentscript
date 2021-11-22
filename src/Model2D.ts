@@ -31,11 +31,12 @@ import Link from "./Link.js";
 //  * @param {boolean} [autoTick=true] Automatically advancee tick count each step if true
 
 export default class Model2D {
-  world;
-  patches;
-  turtles;
-  links;
-  ticks;
+  world: World;
+  patches: Patches;
+  turtles: Turtles;
+  links: Links;
+  ticks: number;
+  step0: () => void;
 
   constructor(worldOptions = World.defaultOptions()) {
     this.resetModel(worldOptions);

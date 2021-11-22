@@ -35,5 +35,5 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": ["src"] /* Specify the files to include in the compilation. */,
-  "exclude": ["vendor"]
+  "exclude": ["vendor", "js"]
 }

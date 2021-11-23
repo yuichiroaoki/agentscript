@@ -168,7 +168,7 @@ export default class AgentSet extends AgentArray {
    * Add an Agent to this AgentSet.  Only used by factory methods.
    * Adds the `id` property to Agent. Increment AgentSet `ID`.
    */
-  addAgent(o: IObject = undefined): Object {
+  addAgent(o: IObject = undefined): any {
     // o only for breeds adding themselves to their baseSet
     o = o || Object.create(this.agentProto); // REMIND: Simplify! Too slick.
     if (this.isBreedSet()) {

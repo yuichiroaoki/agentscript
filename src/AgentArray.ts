@@ -1,10 +1,19 @@
-import * as util from "./utils.js";
+import * as util from "./js/utils.js";
 
 /**
  * Subclass of Array with convenience methods used by NetLogo.
  * Tipically the items in the array are Objects but can be any type.
  */
 export default class AgentArray extends Array {
+  name: string;
+  parameters: {
+    key: any;
+    bins: number;
+    min: any;
+    max: any;
+    binSize: number;
+    arraySize: number;
+  };
   /**
    * Magic to return AgentArrays rather than AgentList
    * or other AgentArray subclasses when using AA methods
@@ -12,9 +21,9 @@ export default class AgentArray extends Array {
    *
    * @readonly
    */
-  static get [Symbol.species]() {
-    return AgentArray;
-  }
+  // static get [Symbol.species]() {
+  //   return AgentArray;
+  // }
 
   /**
    * Convert an existing Array to an AgentArray "in place".
@@ -23,7 +32,7 @@ export default class AgentArray extends Array {
    * @param {Array} array Array to convert to AgentArray
    * @returns {AgentArray} array converted to AgentArray
    */
-  static fromArray(array) {
+  static fromArray(array: Array<any>): AgentArray {
     const aarray = Object.setPrototypeOf(array, AgentArray.prototype);
     return aarray;
   }
@@ -47,7 +56,7 @@ export default class AgentArray extends Array {
    *
    * @returns {Array} This AgentArray converted to Array
    */
-  toArray() {
+  toArray(): Array<any> {
     Object.setPrototypeOf(this, Array.prototype);
     return this;
   }
@@ -71,7 +80,7 @@ export default class AgentArray extends Array {
    *  aa.isEmpty()
    *  //=> false
    */
-  isEmpty() {
+  isEmpty(): boolean {
     return this.length === 0;
   }
   /**
@@ -82,7 +91,7 @@ export default class AgentArray extends Array {
    *  aa.first()
    *  //=> { x: 0, y: 0 }
    */
-  first() {
+  first(): any {
     return this[0];
   }
   /**
@@ -93,7 +102,7 @@ export default class AgentArray extends Array {
    *  aa.last()
    *  //=>  { x: 1, y: 0 }
    */
-  last() {
+  last(): any {
     return this[this.length - 1];
   }
   /**
@@ -105,7 +114,7 @@ export default class AgentArray extends Array {
    *  aa.atIndex(aa.length)
    *  //=>  { x: 0, y: 0 }
    */
-  atIndex(i) {
+  atIndex(i): any {
     if (this.length === 0) return undefined;
     const index = util.mod(i, this.length);
     return this[index];
@@ -118,7 +127,7 @@ export default class AgentArray extends Array {
    * @param {Function} fcn fcn(element) return boolean
    * @returns {boolean} true if fcn returns true for all elements
    */
-  all(fcn) {
+  all(fcn: any): boolean {
     return this.every(fcn);
   }
 
@@ -136,7 +145,7 @@ export default class AgentArray extends Array {
    *  aa.props('y')
    *  //=> [0, 1, 0]
    */
-  props(key, type = AgentArray) {
+  props(key: string, type = AgentArray): Array<any> {
     const result = new type(this.length);
     for (let i = 0; i < this.length; i++) {
       result[i] = this[i][key];
@@ -197,7 +206,7 @@ export default class AgentArray extends Array {
    * @param {Function} fcn fcn(agent, [index], [array])
    * @returns {this} Return this for chaining.
    */
-  forLoop(fcn) {
+  forLoop(fcn: Function): this {
     for (let i = 0, len = this.length; i < len; i++) {
       fcn(this[i], i, this);
     }
@@ -212,7 +221,7 @@ export default class AgentArray extends Array {
    *
    * @param {Function} fcn fcn(agent, [index], [array])
    */
-  ask(fcn) {
+  ask(fcn: Function) {
     const length = this.length;
     // for (let i = 0; i < length || i < this.length; i++) {
     for (let i = 0; i < Math.min(length, this.length); i++) {
@@ -374,10 +383,11 @@ export default class AgentArray extends Array {
   }
   // Return n other random agents from this array
   // otherNOf (n, agent) { return util.otherNOf(n, this, agent) }
-  otherNOf(n, item) {
-    if (this.length < n) throw Error("AgentArray: otherNOf: length < N");
-    return this.clone().remove(item).shuffle().slice(0, n);
-  }
+  // delete for now
+  // otherNOf(n, item) {
+  //   if (this.length < n) throw Error("AgentArray: otherNOf: length < N");
+  //   return this.clone().remove(item).shuffle().slice(0, n);
+  // }
 
   // Return the first agent having the min/max of given value of f(agent).
   // If reporter is a string, convert to a fcn returning that property
@@ -429,22 +439,22 @@ export default class AgentArray extends Array {
   // in ascending order.
   // If reporter is a string, convert to a fcn returning that property
   // NOTE: we do not manage ties, see NetLogo docs.
-  minOrMaxNOf(min, n, reporter) {
-    if (n > this.length) {
-      throw Error("min/max nOf: n larger than AgentArray");
-    }
-    const as = this.clone().sortBy(reporter);
-    return min ? as.clone(0, n) : as.clone(as.length - n);
-  }
-  minNOf(n, reporter) {
-    return this.minOrMaxNOf(true, n, reporter);
-  }
-  maxNOf(n, reporter) {
-    return this.minOrMaxNOf(false, n, reporter);
-  }
+  // delete for now
+  // minOrMaxNOf(min, n, reporter) {
+  //   if (n > this.length) {
+  //     throw Error("min/max nOf: n larger than AgentArray");
+  //   }
+  //   const as = this.clone().sortBy(reporter);
+  //   // const as = this.clone().sortBy(reporter);
+  //   return min ? as.clone(0, n) : as.clone(as.length - n);
+  // }
+  // minNOf(n, reporter) {
+  //   return this.minOrMaxNOf(true, n, reporter);
+  // }
+  // maxNOf(n, reporter) {
+  //   return this.minOrMaxNOf(false, n, reporter);
+  // }
 }
-
-// export default AgentArray
 
 // // Return shallow copy of a portion of this AgentArray
 // // [See Array.slice](https://goo.gl/Ilgsok)

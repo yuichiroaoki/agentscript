@@ -1,6 +1,25 @@
-import * as util from "./utils.js";
-import TwoView from "../src/TwoView.js";
-import ColorMap from "../src/ColorMap.js";
+import * as util from "./utils";
+import TwoView, { IViewOptions } from "../src/TwoView";
+import ColorMap from "../src/js/ColorMap";
+import Model from "./Model";
+
+export interface IDrawOptions {
+  patchesColor?: string | Function | any;
+  initPatches?: Function;
+
+  turtlesColor?: string | Function | any;
+  turtlesStrokeColor?: string;
+  turtlesShape?: string | Function | any;
+  turtlesSize?: number | Function | any;
+  linksColor?: string | Function | any;
+  linksWidth?: number;
+
+  textProperty?: null | string | Function | any;
+  textSize?: number | Function | any;
+  textColor?: string | Function | any;
+  turtlesMap?: any;
+  patchesMap?: any;
+}
 
 /**
  * Basic 2D view.
@@ -8,8 +27,16 @@ import ColorMap from "../src/ColorMap.js";
  * **TODO: Document this class**
  */
 export default class TwoDraw extends TwoView {
+  model: Model;
+  view: this;
+  drawOptions: IDrawOptions;
   static defaultOptions() {
     return {
+      // TwoView
+      div: document.body,
+      useSprites: false,
+      patchSize: 10,
+
       patchesColor: "random",
       initPatches: null,
 
@@ -34,7 +61,11 @@ export default class TwoDraw extends TwoView {
 
   // ======================
 
-  constructor(model, viewOptions = {}, drawOptions = {}) {
+  constructor(
+    model: Model,
+    viewOptions: IViewOptions = {},
+    drawOptions: IDrawOptions = {}
+  ) {
     // drawOptions = Object.assign({}, TwoDraw.defaultOptions(), drawOptions)
     if (viewOptions.drawOptions) {
       drawOptions = viewOptions.drawOptions;

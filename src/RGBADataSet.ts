@@ -1,5 +1,5 @@
 import * as util from "../src/utils.js";
-import DataSet from "./DataSet.js";
+import DataSet from "./js/DataSet.js";
 
 // Parse an RGBA image to a DataSet of the given type.
 // We use all 4 bytes of the pixels, thus map exactly onto

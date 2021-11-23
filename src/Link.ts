@@ -1,5 +1,8 @@
-import * as util from "./utils.js";
-import AgentArray from "./AgentArray.js";
+import * as util from "./js/utils";
+import AgentArray from "./AgentArray";
+import Model from "./Model";
+import AgentSet from "./AgentSet";
+import Turtle from "./Turtle2D";
 
 // Class Link instances form a link between two turtles, forming a graph.
 // Flyweight object creation, see Patch/Patches.
@@ -17,9 +20,10 @@ export default class Link {
   width = 1; // THREE: must be 1. Canvas2D (unsupported) has widths.
 
   // Set by AgentSet
-  agentSet;
-  model;
-  name;
+  agentSet: AgentSet;
+  model: any;
+  name: string;
+  id: number;
 
   // The core default variables needed by a Link.
   // Use links.setDefault(name, val) to change
@@ -65,16 +69,17 @@ export default class Link {
     const rads = Math.atan2(y1 - y0, x1 - x0);
     return this.model.fromRads(rads);
   }
-  otherEnd(turtle) {
+  otherEnd(turtle: Turtle) {
     if (turtle === this.end0) return this.end1;
     if (turtle === this.end1) return this.end0;
     throw Error(`Link.otherEnd: turtle not a link turtle: ${turtle}`);
   }
-  distanceXY(x, y) {
+  distanceXY(x: number, y: number) {
     return (
       this.bothEnds()
         .map((t) => t.distanceXY(x, y))
-        .sum() - this.length()
+        .reduce((a, b) => a + b, 0) - this.length()
+      // .sum() - this.length()
     );
   }
 
@@ -97,5 +102,3 @@ export default class Link {
     return this.end1.z ? this.end1.z : 0;
   }
 }
-
-// export default Link

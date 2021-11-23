@@ -1,4 +1,4 @@
-import * as util from "./utils";
+import * as util from "./js/utils";
 import World from "./World";
 import PatchesView from "./PatchesView";
 import TurtlesView from "./TurtlesView";

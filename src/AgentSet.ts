@@ -34,7 +34,7 @@ interface IObject {
 
 export default class AgentSet extends AgentArray {
   // Inherited by Patches, Turtles, Links
-  model: Model;
+  model: any;
   name: string;
   baseSet;
   AgentClass: Patch | Turtle | Link;

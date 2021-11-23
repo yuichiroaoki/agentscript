@@ -1,14 +1,18 @@
-import * as util from "./utils.js";
-import Color from "./Color.js";
+import * as util from "./js/utils.js";
+import Color from "./js/Color.js";
 
 // const getPixel = color => color.pixel || color
-function getPixel(color) {
-  if (typeof pixel === "number") return pixel;
-  if (color.pixel) return color.pixel;
-  return Color.toTypedColor(color).pixel;
-}
+// function getPixel(color) {
+//   if (typeof pixel === "number") return pixel;
+//   if (color.pixel) return color.pixel;
+//   return Color.toTypedColor(color).pixel;
+// }
 
 export default class PatchesView {
+  ctx: any;
+  useImageSmoothing: boolean;
+  imageData: any;
+  pixels: Uint32Array;
   // Ctor: create a 2D context and imageData for this View
   constructor(width, height) {
     this.ctx = util.createCtx(width, height);
@@ -41,23 +45,23 @@ export default class PatchesView {
           this.pixels.length
       );
     }
-    util.forLoop(data, (d, i) => {
-      this.pixels[i] = getPixel(pixelFcn(d));
-    });
+    // util.forLoop(data, (d, i) => {
+    //   this.pixels[i] = getPixel(pixelFcn(d));
+    // });
 
     // if (updateCanvas) this.ctx.putImageData(this.imageData, 0, 0)
   }
   createPixels(pixelFcn) {
-    util.repeat(this.pixels.length, (i) => {
-      this.pixels[i] = getPixel(pixelFcn(i));
-    });
+    // util.repeat(this.pixels.length, (i) => {
+    //   this.pixels[i] = getPixel(pixelFcn(i));
+    // });
     // if (updateCanvas) this.ctx.putImageData(this.imageData, 0, 0)
   }
   // Used to be: setPixel(x, y, pixel) {
   // but best to be purely independent of world object
   setPixel(index, pixel) {
     // const index = world.xyToPatchIndex(x, y)
-    this.pixels[index] = getPixel(pixel);
+    // this.pixels[index] = getPixel(pixel);
   }
 
   // Draw this pixel canvas onto a View 2D canvas ctx.

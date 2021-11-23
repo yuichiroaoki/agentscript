@@ -1,4 +1,4 @@
-import * as util from "./utils.js";
+import * as util from "./js/utils.js";
 import Shapes from "./Shapes.js";
 
 function cssColor(color) {
@@ -7,6 +7,11 @@ function cssColor(color) {
 }
 
 export default class TurtlesView {
+  patchSize: any;
+  useSprites: any;
+  shapes: Shapes;
+  ctx: any;
+  world: any;
   static defaultOptions() {
     return {
       // canvasStack: false,
@@ -155,7 +160,7 @@ export default class TurtlesView {
     this.ctx.restore(); // set identity does a save()
   }
 
-  drawLink(link, color, width = 1) {
+  drawLink(link, color = undefined, width = 1) {
     this.drawLine(link.x0, link.y0, link.x1, link.y1, color, width);
   }
 

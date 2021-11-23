@@ -1,8 +1,10 @@
-import * as util from "./utils.js";
+import * as util from "./js/utils.js";
 // import AgentArray from './AgentArray.js'
 import AgentList from "./AgentList.js";
 import AgentSet from "./AgentSet.js";
-import DataSet from "./DataSet.js";
+import DataSet from "./js/DataSet.js";
+import Model from "./Model.js";
+import Patch from "./Patch.js";
 
 /**
  * Patches are the world other AgentSets live on.
@@ -14,13 +16,14 @@ import DataSet from "./DataSet.js";
  * Created by class Model. Used by modeler in their Model subclass
  */
 export default class Patches extends AgentSet {
+  labels: any[];
   /**
    * Creates an instance of Patches.
    * @param {Model} model An instance of class Model
    * @param {Patch} AgentClass The Patch class managed by Patches
    * @param {string} name Name of the AgentSet
    */
-  constructor(model, AgentClass, name) {
+  constructor(model: Model, AgentClass: Patch, name: string) {
     // AgentSet sets these variables:
     // model, name, baseSet, world: model.world, agentProto: new AgentClass
     // REMIND: agentProto: defaults, agentSet, world, [name]=agentSet.baseSet

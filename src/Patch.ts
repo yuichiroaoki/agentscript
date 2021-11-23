@@ -1,4 +1,4 @@
-import * as util from "./utils.js";
+import * as util from "./js/utils.js";
 import AgentList from "./AgentList";
 import AgentSet from "./AgentSet";
 import Model from "./Model";
@@ -34,7 +34,7 @@ import AgentArray from "./AgentArray";
 export default class Patch {
   // Set by AgentSet
   agentSet: AgentSet;
-  model: Model;
+  model: any;
   name: string;
 
   turtles: AgentSet;
@@ -113,9 +113,9 @@ export default class Patch {
    *
    * @return {AgentArray}
    */
-  get turtlesHere(): Turtles | null {
+  get turtlesHere(): AgentSet | null {
     if (this.turtles == null) {
-      this.patches.ask((p: Patch) => {
+      this.patches.ask((p: any) => {
         p.turtles = new AgentList(this.model);
       });
       this.model.turtles.ask((t: Turtle) => {
@@ -131,7 +131,7 @@ export default class Patch {
    * @param {String} breed
    * @return {AgentArray}
    */
-  breedsHere(breed: string): AgentSet {
+  breedsHere(breed: any): any {
     const turtles = this.turtlesHere;
     return turtles.withBreed(breed);
   }

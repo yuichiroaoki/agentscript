@@ -1,4 +1,4 @@
-import * as util from "./utils";
+import * as util from "./js/utils";
 import TwoView, { IViewOptions } from "../src/TwoView";
 import ColorMap from "../src/js/ColorMap";
 import Model from "./Model";

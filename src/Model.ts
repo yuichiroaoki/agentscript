@@ -1,4 +1,4 @@
-import Model from "./Model3D.js";
+import Model from "./js/Model3D.js";
 
 /**
  *  This is our default Model which simply re-exports Model3D
@@ -9,7 +9,7 @@ import Model from "./Model3D.js";
  *  ..you will be using ./Model3D
  *
  *  @param {Object|World} [worldOptions=World.defaultOptions()]
- *  Identical to {@link Model3D}
+ *  Identical to {@link Model2D}
  */
 
 export default Model;

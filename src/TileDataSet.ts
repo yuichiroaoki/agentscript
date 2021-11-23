@@ -1,4 +1,4 @@
-import * as util from "./utils.js";
+import * as util from "./js/utils.js";
 import RGBDataSet from "./RGBDataSet.js";
 
 export function rgbToInt24(r, g, b) {

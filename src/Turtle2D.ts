@@ -3,7 +3,7 @@ import AgentSet from "./AgentSet";
 import Link from "./Link";
 import Model from "./Model";
 import Patch from "./Patch";
-import * as util from "./utils";
+import * as util from "./js/utils";
 
 /**
  * Class Turtle instances represent the dynamic, behavioral element of modeling.
@@ -21,8 +21,8 @@ export default class Turtle {
   atEdge = "wrap";
   hidden = false;
   // Set by AgentSet
-  agentSet: AgentSet;
-  model: Model;
+  agentSet: any;
+  model: any;
   name: string;
   theta: any;
   x: number;
@@ -30,7 +30,6 @@ export default class Turtle {
   z: number;
   id: number;
   pitch: any;
-
   // Alas doesn't work
   // /**
   //  * @ignore
@@ -232,8 +231,8 @@ export default class Turtle {
       } else {
         throw Error(`turtle.handleEdge: bad atEdge: ${atEdge}`);
       }
-    } else {
-      this.atEdge(this);
+      // } else {
+      //   this.atEdge(this);
     }
   }
   /**
@@ -461,7 +460,7 @@ export default class Turtle {
    * @param {Turtle} t
    * @return {Boolean}
    */
-  isLinkNeighbor(t: Turtle): boolean {
+  isLinkNeighbor(t: any): boolean {
     return t in this.linkNeighbors();
   }
 }

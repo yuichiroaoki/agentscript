@@ -1,5 +1,5 @@
-import * as util from "./utils.js";
-import DataSet from "./DataSet.js";
+import * as util from "./js/utils.js";
+import DataSet from "./js/DataSet.js";
 
 // The mapbox elevation formula:
 // https://blog.mapbox.com/global-elevation-data-6689f1d0ba65

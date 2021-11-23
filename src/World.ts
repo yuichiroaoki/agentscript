@@ -1,4 +1,4 @@
-import * as util from "./utils.js";
+import * as util from "./js/utils.js";
 
 // class World defines the coordinate system for the model.
 // It will be  upgraded with methods converting from other
@@ -75,7 +75,11 @@ export default class World {
    * @param {number} [maxZ=Math.max(maxX, maxY)] Integer max Z value
    * @returns {WorldOptions}
    */
-  static defaultOptions(maxX = 16, maxY = maxX, maxZ = Math.max(maxX, maxY)) {
+  static defaultOptions(
+    maxX: number = 16,
+    maxY: number = maxX,
+    maxZ: number = Math.max(maxX, maxY)
+  ) {
     return {
       minX: -maxX,
       maxX: maxX,

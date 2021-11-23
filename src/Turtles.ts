@@ -1,7 +1,7 @@
-import * as util from "./utils.js";
-// import AgentArray from './AgentArray.js'
-import AgentList from "./AgentList.js";
-import AgentSet from "./AgentSet.js";
+import * as util from "./js/utils";
+import AgentList from "./AgentList";
+import AgentSet from "./AgentSet";
+import Turtle from "./Turtle2D";
 
 /**
  * A {@link Turtle} is an object living on the {@link Patches} world.
@@ -37,12 +37,13 @@ export default class Turtles extends AgentSet {
    * @param {Function} [initFcn=turtle => {}]
    * @return {Turtle} The newly created Turtle
    */
-  createOne(initFcn = (turtle) => {}) {
+  createOne(initFcn: Function = (turtle: Turtle) => {}): Turtle {
     const turtle = this.addAgent();
     // NetLogo docs: Creates number new turtles at the origin.
     // New turtles have random integer headings
     // turtle.theta = util.randomFloat(Math.PI * 2)
-    turtle.heading = this.model.fromRads(util.randomFloat(Math.PI * 2));
+    turtle.heading(this.model.fromRads(util.randomFloat(Math.PI * 2)));
+    // turtle.heading = this.model.fromRads(util.randomFloat(Math.PI * 2));
     const p = turtle.patch;
     if (p.turtles != null) {
       p.turtles.push(turtle);
@@ -59,7 +60,7 @@ export default class Turtles extends AgentSet {
    * @param {Function} [initFcn=turtle => {}] A function to initialize new turtles.
    * @return {Array} The newly created Turtles
    */
-  create(num, initFcn = (turtle) => {}) {
+  create(num: number, initFcn: Function = (turtle) => {}) {
     return util.repeat(num, (i, a) => {
       a.push(this.createOne(initFcn));
     });
@@ -90,7 +91,7 @@ export default class Turtles extends AgentSet {
    * @returns {AgentList} The turtles withn the Patches array.
    */
   inPatches(patches) {
-    let array = new AgentList(this.model);
+    let array: any = new AgentList(this.model);
     for (const p of patches) array.push(...p.turtlesHere);
     // REMIND: can't use withBreed .. its not an AgentSet. Move to AgentArray?
     if (this.isBreedSet()) array = array.filter((a) => a.agentSet === this);

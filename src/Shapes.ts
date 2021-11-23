@@ -1,4 +1,4 @@
-import * as util from "./utils.js";
+import * as util from "./js/utils.js";
 
 function cssColor(color) {
   if (color) return color.css || color;
@@ -8,6 +8,7 @@ function cssColor(color) {
 // Shapes are Canvas2D drawings in -0.5 to +0.5, unit squares
 // They are drawn on a Canvas2D using transforms for x, y, theta
 export default class Shapes {
+  [x: string]: any;
   constructor() {
     this.cache = {};
     this.paths = paths; // For accessing the paths thru the Shapes instance

@@ -1,4 +1,4 @@
-import Turtle2D from "./Turtle2D.js";
+import Turtle2D from "../Turtle2D.js";
 import { Object3D } from "../vendor/Object3D.js";
 import * as util from "./utils.js";
 

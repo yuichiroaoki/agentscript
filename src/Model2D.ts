@@ -5,6 +5,7 @@ import Turtles from "./Turtles.js";
 import Turtle2D from "./Turtle2D.js";
 import Links from "./Links.js";
 import Link from "./Link.js";
+import AgentSet from "./AgentSet.js";
 
 /**
  * Class Model2D is the primary interface for modelers, integrating
@@ -168,9 +169,9 @@ export default class Model2D {
 // The default set is for "heading" or "clock" geometry,
 // Degrees clockwise from the y-axis.
 // Add mod2pi & mod360?
-const toDeg = 180 / Math.PI;
-const toRad = Math.PI / 180;
-const geometries = {
+export const toDeg = 180 / Math.PI;
+export const toRad = Math.PI / 180;
+export const geometries = {
   radians: {
     toRads: (rads) => rads,
     fromRads: (rads) => rads,

@@ -1,4 +1,4 @@
-import * as util from "./utils.js";
+import * as util from "./js/utils.js";
 import Shapes from "./Shapes.js";
 
 // Sprites are shapes rendered within a sprite-sheet canvas.

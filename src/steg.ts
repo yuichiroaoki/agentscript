@@ -1,4 +1,4 @@
-import * as util from "./utils.js";
+import * as util from "./js/utils.js";
 
 // img can be: image, canvas, context2d, url, data url
 async function toContext(img) {

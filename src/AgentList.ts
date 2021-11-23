@@ -1,5 +1,10 @@
-import * as util from "./utils";
+import * as util from "./js/utils";
 import AgentArray from "./AgentArray";
+
+interface IObject {
+  x: number;
+  y: number;
+}
 
 export default class AgentList extends AgentArray {
   model: any;
@@ -27,7 +32,7 @@ export default class AgentList extends AgentArray {
 
   // Return all agents within rectangle from given agent o.
   // dx & dy are (float) half width/height of rect
-  inRect(o, dx, dy = dx, meToo = false) {
+  inRect(o: IObject, dx, dy = dx, meToo = false) {
     const agents = new AgentList(this.model);
     const minX = o.x - dx; // ok if max/min off-world, o, a are in-world
     const maxX = o.x + dx;
@@ -42,7 +47,7 @@ export default class AgentList extends AgentArray {
   }
 
   // Return all agents in AgentArray within d distance from given object.
-  inRadius(o, radius, meToo = false) {
+  inRadius(o: IObject, radius, meToo = false) {
     const agents = new AgentList(this.model);
     // const {x, y} = o // perf?
     const d2 = radius * radius;
@@ -57,7 +62,7 @@ export default class AgentList extends AgentArray {
 
   // As above, but also limited to the angle `coneAngle` around
   // a `angle` from object `o`. coneAngle and direction in radians.
-  inCone(o, radius, coneAngle, heading, meToo = false) {
+  inCone(o: IObject, radius, coneAngle, heading, meToo = false) {
     heading = this.model.toRads(heading);
     coneAngle = this.model.toAngleRads(coneAngle);
 

@@ -53,7 +53,7 @@ export default class AgentSet extends AgentArray {
   //   return AgentArray;
   // }
 
-  constructor(model, AgentClass, name, baseSet = null) {
+  constructor(model, AgentClass, name: string, baseSet = null) {
     super(); // create empty AgentArray
     baseSet = baseSet || this; // if not a breed, set baseSet to this
     Object.assign(this, { model, name, baseSet, AgentClass });

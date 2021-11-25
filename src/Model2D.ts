@@ -129,7 +129,7 @@ export default class Model2D {
    *
    * @param {string} breedNames A string of space separated breeds names
    */
-  patchBreeds(breedNames) {
+  patchBreeds(breedNames: string) {
     for (const breedName of breedNames.split(" ")) {
       this[breedName] = this.patches.newBreed(breedName);
     }
@@ -140,7 +140,7 @@ export default class Model2D {
    *
    * @param {string} breedNames A string of space separated breeds names
    */
-  turtleBreeds(breedNames) {
+  turtleBreeds(breedNames: string) {
     for (const breedName of breedNames.split(" ")) {
       this[breedName] = this.turtles.newBreed(breedName);
     }
@@ -151,7 +151,7 @@ export default class Model2D {
    *
    * @param {string} breedNames A string of space separated breeds names
    */
-  linkBreeds(breedNames) {
+  linkBreeds(breedNames: string) {
     for (const breedName of breedNames.split(" ")) {
       this[breedName] = this.links.newBreed(breedName);
     }

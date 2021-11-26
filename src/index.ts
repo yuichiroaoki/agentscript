@@ -6,6 +6,7 @@ import World from "./World";
 import PatchesView from "./PatchesView";
 import TurtlesView from "./TurtlesView";
 import Color from "./js/Color";
+import ColorMap from "./js/ColorMap";
 import Patch from "./Patch";
 import Turtles from "./Turtles";
 import Model from "./Model";
@@ -21,6 +22,7 @@ export {
   World,
   PatchesView,
   Color,
+  ColorMap,
   Patch,
   Turtles,
   TurtlesView,

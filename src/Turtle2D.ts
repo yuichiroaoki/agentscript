@@ -287,7 +287,7 @@ export default class Turtle {
    *
    * @param {Patch|Turtle} agent The agent to face towards
    */
-  face(agent: any) {
+  face(agent: Patch | Turtle) {
     // this.theta = this.towards(agent)
     this.heading = this.towards(agent);
   }
@@ -391,7 +391,7 @@ export default class Turtle {
    * @param {Patch|Turtle} agent The agent who's angle from this Turtle we use
    * @return {number} The angle towards the agent
    */
-  towards(agent: { x: number; y: number }): number {
+  towards(agent: Patch | Turtle): number {
     return this.towardsXY(agent.x, agent.y);
   }
   /**

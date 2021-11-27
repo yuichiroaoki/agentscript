@@ -28,3 +28,5 @@ LeafletElementOverlay
 # web_modules/
 
 lib
+demo
+build

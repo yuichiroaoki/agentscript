@@ -16,6 +16,7 @@ import TwoDraw from "./TwoDraw";
 import TwoView from "./TwoView";
 import Link from "./Link";
 import Links from "./Links";
+import Shapes from "./Shapes";
 import * as utils from "./utils";
 
 export {
@@ -37,5 +38,6 @@ export {
   TwoView,
   Link,
   Links,
+  Shapes,
   utils,
 };
